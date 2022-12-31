@@ -12,6 +12,7 @@ const ProductList = ()=> {
   
   return (
     <div>
+      <h2>상품목록</h2>
       <ul className="wrap_produects">
         {data?.map(product => (
           <ProductItem { ...product } key={product.id} />

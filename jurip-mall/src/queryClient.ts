@@ -23,6 +23,7 @@ export const fetcher = async ({
   method,
   path,
   body,
+  params,
 }: {
   method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
   path: string;
@@ -30,7 +31,7 @@ export const fetcher = async ({
   params?: AnyOBJ;
 })=> {
   try {
-    const url = `${BASE_URL}${path}`
+    let url = `${BASE_URL}${path}`
     const fetchOptions: RequestInit = {
       method,
       headers: {
@@ -38,6 +39,12 @@ export const fetcher = async ({
         'Access-Control-Allow-Origin': BASE_URL
       }
     }
+
+    if (params) {
+      const searchParmas = new URLSearchParams(params)
+      url += '?' + searchParmas.toString()
+    }
+    if (body) fetchOptions.body = JSON.stringify(body)
     const res = await fetch(url, fetchOptions)
     const json = await res.json()
     return json
