@@ -1,0 +1,15 @@
+.wrap_produects{
+  display: grid;
+  list-style: none;
+  grid-template-columns: repeat(3, 1fr);
+  gap :10px;
+  .product-item {
+    border: 1px solid #333;
+    padding: 10px;
+    &__img {
+      width: 100%;
+      height: 150px;
+      object-fit: contain;
+    }
+  }
+}
