@@ -8,6 +8,10 @@ export type PRODUCT = {
   description: string;
   createdAt: string;
 } 
+
+export type PRODUCTS = {
+  products: PRODUCT[]
+}
 const GET_PRODUCTS = gql`
   query GET_PRODUCTS {
     id
