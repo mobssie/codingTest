@@ -1,4 +1,4 @@
-import { ADD_CART, TCart, GET_CART } from './../graphql/cart';
+import { ADD_CART, TCart, GET_CART, UPDATE_CART } from './../graphql/cart';
 import { graphql } from 'msw'
 import GET_PRODUCTS, { GET_PRODUCT } from './../graphql/products';
 
@@ -44,10 +44,20 @@ export const handlers = [
           amount: 1
         }
       }
-      console.log('newData[id]', newData[id])
     }
     cartData = newData
     console.log('cartData ::', cartData)
+    return res(ctx.data(newData))
+  }),
+  graphql.mutation(UPDATE_CART,(req, res, ctx)=> {
+    const newData = {...cartData}
+    const { id, amount } = req.variables
+    if(!newData[id]) { throw new Error('없는 데이터입니다.')}
+    newData[id] = {
+      ...newData[id],
+      amount,
+    }
+    cartData = newData
     return res(ctx.data(newData))
   }),
 ]
