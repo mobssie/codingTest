@@ -11,28 +11,37 @@ const CartItem = ({
   amount
 }: TCart)=> {
   const queryClient = getClient()
-  const { mutate: updateCart } = useMutation(({id, amount}: {id: string, amount: number})=> graphqlFetcher(UPDATE_CART, {id, amount }))
+  const { mutate: updateCart } = useMutation(({id, amount}: {id: string, amount: number})=> graphqlFetcher(UPDATE_CART, {id, amount }),{
+    onMutate: async ({ id, amount })=> {
+      await queryClient.cancelQueries(QueryKeys.CART)
+      const prevCart = queryClient.getQueryData<{ [key: string]: TCart }>(QueryKeys.CART)
+      if(!prevCart?.[id]) return prevCart
+      
+      const newCart = {
+        ...(prevCart || {}),
+        [id]: { ...prevCart[id], amount },
+      }
+      queryClient.setQueryData(QueryKeys.CART, newCart)
+      return prevCart
+    },
+    onSuccess: newValue => {
+      // item 하나에 대한 데이터 
+      const prevCart = queryClient.getQueryData<{ [key: string]: TCart }>(QueryKeys.CART)
+      const newCart = {
+        ...(prevCart || {}),
+        [id]: newValue,
+      }
+      queryClient.setQueryData(QueryKeys.CART, newCart) // Cart 전체에 대한 데이터
+    }
+  })
 
   const handleUpdateAmount = (e: SyntheticEvent)=> {
     const amount = Number((e.target as HTMLInputElement).value)
-    // 성공했을때 mutaion먼저 적용하고 get하기 위해서 비동기 처리
-    // invalidateQueries사용하면
-    updateCart({ id, amount }, 
-      {
-        onSuccess: (newValue, valiables)=> {
-          const prevCart = queryClient.getQueryData(QueryKeys.CART)
-          const newCart = {
-            ...(prevCart || {}),
-            ...newValue
-          }
-          queryClient.setQueriesData(QueryKeys.CART, newCart)
-        }
-      }
-    )
+    updateCart({ id, amount })
   }
   return (
     <li className="wrap_cart__item">
-      <img src={imageUrl} />
+      <img src={imageUrl} className="wrap_cart__image"/>
       <span className="wrap_cart__price">{price}</span>
       <span className="wrap_cart__title">{title}</span>
       <input
