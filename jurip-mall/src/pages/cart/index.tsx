@@ -1,12 +1,14 @@
 import { useQuery } from "react-query";
-import { GET_CART } from "../../graphql/cart";
+import { Cart, GET_CART } from "../../graphql/cart";
 import { product } from "../../graphql/products";
 import { graphqlFetcher, QueryKeys } from "../../queryClient";
+import CartList from "./components/cartList";
 
 const Cart = () => {
-  const { data } = useQuery<product>(QueryKeys.CART, ()=> graphqlFetcher(GET_CART))
-  console.log('cart data', data)
-  return (<div>장바구니</div>)
+  const { data } = useQuery(QueryKeys.CART, ()=> graphqlFetcher(GET_CART))
+  const cartItems = Object.values(data) as Cart[]
+  
+  return (<CartList items={cartItems} />)
 }
 
 export default Cart;
