@@ -40,13 +40,13 @@ const CartItem = ({
     updateCart({ id, amount })
   }
   return (
-    <li className="wrap_cart__item">
-      <img src={imageUrl} className="wrap_cart__image"/>
-      <span className="wrap_cart__price">{price}</span>
-      <span className="wrap_cart__title">{title}</span>
+    <li className="item_cart">
+      <img src={imageUrl} className="item_cart__image"/>
+      <span className="item_cart__price">{price}</span>
+      <span className="item_cart__title">{title}</span>
       <input
         type="number"
-        className="wrap_cart__amount"
+        className="item_cart__amount"
         value={amount}
         onChange={handleUpdateAmount}
       />
