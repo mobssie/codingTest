@@ -19,7 +19,14 @@ const CartItem = ({
     // invalidateQueries사용하면
     updateCart({ id, amount }, 
       {
-        onSuccess: ()=> queryClient.invalidateQueries(QueryKeys.CART)
+        onSuccess: (newValue, valiables)=> {
+          const prevCart = queryClient.getQueryData(QueryKeys.CART)
+          const newCart = {
+            ...(prevCart || {}),
+            ...newValue
+          }
+          queryClient.setQueriesData(QueryKeys.CART, newCart)
+        }
       }
     )
   }
