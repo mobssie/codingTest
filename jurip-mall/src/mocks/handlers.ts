@@ -1,4 +1,4 @@
-import { ADD_CART, Cart, GET_CART } from './../graphql/cart';
+import { ADD_CART, TCart, GET_CART } from './../graphql/cart';
 import { graphql } from 'msw'
 import GET_PRODUCTS, { GET_PRODUCT } from './../graphql/products';
 
@@ -11,7 +11,7 @@ const mockProducts = (()=> Array.from({ length: 20}).map((_, i)=> ({
     description: `임시상세내용${i+1}`,
     createdAt: new Date(1234567890123+(i*1000*60*60*10)).toString()
 })))()
-let cartData: { [key: string]: Cart } = {}
+let cartData: { [key: string]: TCart } = {}
 export const handlers = [
   graphql.query(GET_PRODUCTS, (req, res, ctx)=> {
     return res(
@@ -26,7 +26,6 @@ export const handlers = [
     return res()
   }),
   graphql.query(GET_CART, (req, res, ctx)=> {
-    console.log('????')
     return res(ctx.data(cartData))
   }),
   graphql.mutation(ADD_CART, (req, res, ctx)=> {
@@ -39,8 +38,6 @@ export const handlers = [
       }
     } else {
       const found = mockProducts.find(item => item.id === req.variables.id)
-      console.log(found)
-      console.log('@@@', newData)
       if(found) {
         newData[id] = {
           ...found,
@@ -50,7 +47,7 @@ export const handlers = [
       console.log('newData[id]', newData[id])
     }
     cartData = newData
-    console.log('cartData', cartData)
+    console.log('cartData ::', cartData)
     return res(ctx.data(newData))
   }),
 ]

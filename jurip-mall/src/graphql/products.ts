@@ -12,6 +12,7 @@ export type product = {
 export type products = {
   products: product[]
 }
+
 const GET_PRODUCTS = gql`
   query GET_PRODUCTS {
     id
