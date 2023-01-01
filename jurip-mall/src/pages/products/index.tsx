@@ -5,7 +5,7 @@ import ProductItem from './components/item'
 
 const ProductList = ()=> {
   const { data } = useQuery<products>(QueryKeys.PRODUCTS, ()=> graphqlFetcher(GET_PRODUCTS))
-  console.log('data', data)
+  console.log('ProductList', data)
   
   return (
     <div>
