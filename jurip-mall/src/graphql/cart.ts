@@ -21,20 +21,31 @@ export const ADD_CART = gql`
 
 export const UPDATE_CART = gql`
   mutation UPDATE_CART($id: id, $amount: amount) {
+    cart(id: $id, amount: $amount){
+      id
+      imageUrl
+      price
+      title
+      amount
+    }
+  }
+`
+
+
+export const DELETE_CART = gql`
+  mutation DELETE_CART($id: string) {
     id
-    imageUrl
-    price
-    title
-    amount
   }
 `
 
 export const GET_CART = gql`
   query GET_CART {
-    id
-    imageUrl
-    price
-    title
-    amount
+    cart {
+      id
+      imageUrl
+      price
+      title
+      amount
+    }
   }
 `

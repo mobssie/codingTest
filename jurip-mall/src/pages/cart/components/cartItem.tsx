@@ -41,6 +41,7 @@ const CartItem = ({
   }
   return (
     <li className="item_cart">
+      <input type="checkbox" className="item_cart__checkbox" />
       <img src={imageUrl} className="item_cart__image"/>
       <span className="item_cart__price">{price}</span>
       <span className="item_cart__title">{title}</span>
@@ -50,6 +51,7 @@ const CartItem = ({
         value={amount}
         onChange={handleUpdateAmount}
       />
+      <button type="button" className="item_cart__delete" >삭제</button>
     </li>
   )
 }

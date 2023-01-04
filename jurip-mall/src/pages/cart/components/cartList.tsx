@@ -3,9 +3,14 @@ import CartItem from "./cartItem"
 
 const CartList = ({ items }: { items: TCart[] })=> {
   return (
-    <ul className="wrap_cart">
-      {items.map(item=> <CartItem {...item} key={item.id}/> )}
-    </ul>
+    <>
+      <label>
+        <input type="checkbox" /> 전체선택
+      </label>
+      <ul className="wrap_cart">
+        {items.map(item=> <CartItem {...item} key={item.id}/> )}
+      </ul>
+    </>
   )
 }
 
