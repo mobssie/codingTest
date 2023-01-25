@@ -55,25 +55,25 @@ const CartItem = ({
   }
 
   return (
-    <li className="item_cart">
+    <li className="cart-item">
       <input 
         type="checkbox"
-        name={`selete-item_${id}`}
-        className="item_cart__checkbox"
+        name={`select-item_${id}`}
+        className="cart-item__checkbox"
       />
-      <img src={imageUrl} className="item_cart__image"/>
-      <span className="item_cart__price">{price}</span>
-      <span className="item_cart__title">{title}</span>
+      <img src={imageUrl} className="cart-item__image"/>
+      <span className="cart-item__price">{price}</span>
+      <span className="cart-item__title">{title}</span>
       <input
         type="number"
-        className="item_cart__amount"
+        className="cart-item__amount"
         value={amount}
         min={1}
         onChange={handleUpdateAmount}
       />
       <button
         type="button"
-        className="item_cart__delete"
+        className="cart-item__delete"
         onClick={handlerDeleteItem}
       >삭제</button>
     </li>

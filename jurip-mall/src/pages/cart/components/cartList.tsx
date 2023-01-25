@@ -4,6 +4,7 @@ import CartItem from "./cartItem"
 
 const CartList = ({ items }: { items: TCart[] })=> {
    const formRef = useRef<HTMLFormElement>(null)
+
    const handleCheckboxChanged = (e: SyntheticEvent)=> {
     if (!formRef.current) return
     const checkedboxes = formRef.current.querySelectorAll<HTMLInputElement>('.cart-item__checkbox')
@@ -11,8 +12,9 @@ const CartList = ({ items }: { items: TCart[] })=> {
     const data = new FormData(formRef.current)
     const selectedCount = data.getAll('select-item').length
 
-    if(targetInput.classList.contains('selete-item')){
-      // seleted-all 선택시
+    if(targetInput.classList.contains('select-item')){
+      console.log('???')
+      // select-all 선택시
       const allChecked = targetInput.checked
       checkedboxes.forEach(inputElement=> {
         inputElement.checked = allChecked
@@ -20,13 +22,17 @@ const CartList = ({ items }: { items: TCart[] })=> {
     } else {
       // 개별아이템 선택시
       const allChecked = selectedCount === items.length
-      formRef.current.querySelector<HTMLInputElement>('.selete-all')!.checked = allChecked
+      formRef.current.querySelector<HTMLInputElement>('.select-all')!.checked = allChecked
     }
   }
   return (
     <form ref={formRef} onChange={handleCheckboxChanged}>
       <label>
-        <input className="selete-item" type="checkbox" name="select-all"/>
+        <input
+          type="checkbox" 
+          className="select-all"
+          name="select-all"
+          />
         전체선택
       </label>
       <ul className="wrap_cart">
