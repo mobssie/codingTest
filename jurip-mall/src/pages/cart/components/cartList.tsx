@@ -12,8 +12,7 @@ const CartList = ({ items }: { items: TCart[] })=> {
     const data = new FormData(formRef.current)
     const selectedCount = data.getAll('select-item').length
 
-    if(targetInput.classList.contains('select-item')){
-      console.log('???')
+    if(targetInput.classList.contains('select-all')){
       // select-all 선택시
       const allChecked = targetInput.checked
       checkedboxes.forEach(inputElement=> {
