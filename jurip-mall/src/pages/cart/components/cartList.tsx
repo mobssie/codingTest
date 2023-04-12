@@ -1,12 +1,13 @@
 import { createRef, SyntheticEvent, useRef } from "react"
+import { useSetRecoilState } from "recoil"
 import { TCart } from "../../../graphql/cart"
+import { checkedCartState } from "../../../recoils/cart"
 import CartItem from "./cartItem"
 
 const CartList = ({ items }: { items: TCart[] })=> {
+  const setCheckedCartState = useSetRecoilState(checkedCartState)
   const formRef = useRef<HTMLFormElement>(null)
   const checkboxRefs = items.map(()=> createRef<HTMLInputElement>())
-  console.log('checkboxRefs', checkboxRefs)
-
 
   const handleCheckboxChanged = (e: SyntheticEvent)=> {
     if (!formRef.current) return
@@ -25,6 +26,11 @@ const CartList = ({ items }: { items: TCart[] })=> {
       const allChecked = selectedCount === items.length
       formRef.current.querySelector<HTMLInputElement>('.select-all')!.checked = allChecked
     }
+    const checkedItems = checkboxRefs.reduce<TCart[]>((res, ref, i)=> {
+      if(ref.current!.checked) res.push(items[i])
+      return res
+    }, [])
+    setCheckedCartState(checkedItems)
   }
   return (
     <form ref={formRef} onChange={handleCheckboxChanged}>

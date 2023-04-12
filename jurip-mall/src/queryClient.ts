@@ -10,8 +10,8 @@ export const getClient = (()=> {
     if(!client) client = new QueryClient({
       defaultOptions: {
         queries: {
-          staleTime: Infinity,
-          cacheTime: Infinity,
+          staleTime: Infinity, // 중요! SSR 프리페치쿼리 hydrate. 얘가 이미 stale한 useQuery 데이터로 인식 -> useQuery // 캐싱관리는 알아서 하는것
+          cacheTime: Infinity, // 0
           refetchOnMount: false,
           refetchOnReconnect: false,
           refetchOnWindowFocus: false,
