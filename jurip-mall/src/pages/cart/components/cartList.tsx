@@ -3,6 +3,7 @@ import { useSetRecoilState } from "recoil"
 import { TCart } from "../../../graphql/cart"
 import { checkedCartState } from "../../../recoils/cart"
 import CartItem from "./cartItem"
+import WillPay from "./willPay"
 
 const CartList = ({ items }: { items: TCart[] })=> {
   const setCheckedCartState = useSetRecoilState(checkedCartState)
@@ -47,6 +48,7 @@ const CartList = ({ items }: { items: TCart[] })=> {
           <CartItem {...item} key={item.id} ref={checkboxRefs[i]}/>
         ))}
       </ul>
+      <WillPay />
     </form>
   )
 }
