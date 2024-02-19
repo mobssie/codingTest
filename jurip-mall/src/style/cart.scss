@@ -22,3 +22,21 @@
     display: block;
   }
 }
+
+.wrap-willpay{
+  display: flex;
+  border: 1px solid #000;
+  padding: 10px;
+
+  .list-willpay{
+    display: flex;
+    padding: 0;
+    gap: 10px;
+  }
+
+  img {
+    width: 100px;
+    height: 75px;
+    object-fix: contain;
+  }
+}

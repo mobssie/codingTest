@@ -11,8 +11,8 @@ const willPay = ()=> {
   }, 0)
 
   return (
-    <div>
-      <ul>
+    <div className="wrap-willpay">
+      <ul className="list-willpay">
         {checkedItmes.map(({ imageUrl, price, title, amount, id })=> (
         <li>
           <ItemData imageUrl={imageUrl} price={price} title={title} key={id} />

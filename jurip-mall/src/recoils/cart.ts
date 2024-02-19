@@ -7,6 +7,8 @@ export const checkedCartState = atom<TCart[]>({
 })
 
 
+
+
 // Parameter => ({get: GetRecoilValue}) => Promise<T> | RecoilValue<T> | T,
 // export const cartItemSelector = selectorFamily<number | undefined, string>({
 //   key: 'cartItem',
