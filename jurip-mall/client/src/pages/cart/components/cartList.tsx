@@ -1,22 +1,23 @@
-import { createRef, SyntheticEvent, useRef } from "react"
-import { useSetRecoilState } from "recoil"
+import { createRef, SyntheticEvent, useEffect, useRef, useState } from "react"
+import { useRecoilState, useSetRecoilState } from "recoil"
 import { TCart } from "../../../graphql/cart"
 import { checkedCartState } from "../../../recoils/cart"
 import CartItem from "./cartItem"
 import WillPay from "./willPay"
 
 const CartList = ({ items }: { items: TCart[] })=> {
-  const setCheckedCartState = useSetRecoilState(checkedCartState)
+  const [checkedCartData, setCheckedCartData] = useRecoilState(checkedCartState)
   const formRef = useRef<HTMLFormElement>(null)
   const checkboxRefs = items.map(()=> createRef<HTMLInputElement>())
+  const [formData, setFormData] = useState<FormData>()
 
-  const handleCheckboxChanged = (e: SyntheticEvent)=> {
+  const handleCheckboxChanged = (e?: SyntheticEvent)=> {
     if (!formRef.current) return
-    const targetInput = e.target as HTMLInputElement
     const data = new FormData(formRef.current)
     const selectedCount = data.getAll('select-item').length
-
-    if(targetInput.classList.contains('select-all')){
+    
+    const targetInput = e?.target as HTMLInputElement
+    if(targetInput && targetInput.classList.contains('select-all')){
       // select-all 선택시
       const allChecked = targetInput.checked
       checkboxRefs.forEach(inputElement=> {
@@ -27,12 +28,26 @@ const CartList = ({ items }: { items: TCart[] })=> {
       const allChecked = selectedCount === items.length
       formRef.current.querySelector<HTMLInputElement>('.select-all')!.checked = allChecked
     }
+    setFormData(data)
+    
+  }
+
+  useEffect(() => {
+    checkedCartData.forEach(item=> {
+      const itemRef = checkboxRefs.find(ref => ref.current!.dataset.id === item.id)
+      if(itemRef) itemRef.current!.checked = true
+    })
+    handleCheckboxChanged()
+  }, [])
+
+  useEffect(() => {
     const checkedItems = checkboxRefs.reduce<TCart[]>((res, ref, i)=> {
       if(ref.current!.checked) res.push(items[i])
       return res
     }, [])
-    setCheckedCartState(checkedItems)
-  }
+    setCheckedCartData(checkedItems)
+  }, [items, formData])
+
   return (
     <form ref={formRef} onChange={handleCheckboxChanged}>
       <label>

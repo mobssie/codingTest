@@ -62,6 +62,7 @@ const CartItem = ({
         name="select-item"
         className="cart-item__checkbox"
         ref={ref}
+        data-id={id}
       />
       <ItemData imageUrl={imageUrl} price={price} title={title} />
       <input
