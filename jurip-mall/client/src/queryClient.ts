@@ -4,20 +4,21 @@ import { request, RequestDocument } from 'graphql-request'
 
 type AnyOBJ = { [key: string]: any }
 
-export const getClient = (()=> {
-  let client: QueryClient | null = null;
-  return ()=> {
-    if(!client) client = new QueryClient({
-      defaultOptions: {
-        queries: {
-          staleTime: Infinity, // 중요! SSR 프리페치쿼리 hydrate. 얘가 이미 stale한 useQuery 데이터로 인식 -> useQuery // 캐싱관리는 알아서 하는것
-          cacheTime: Infinity, // 0
-          refetchOnMount: false,
-          refetchOnReconnect: false,
-          refetchOnWindowFocus: false,
-        }
-      }
-    });
+export const getClient = (() => {
+  let client: QueryClient | null = null
+  return () => {
+    if (!client)
+      client = new QueryClient({
+        defaultOptions: {
+          queries: {
+            staleTime: Infinity, // 중요! SSR 프리페치쿼리 hydrate. 얘가 이미 stale한 useQuery 데이터로 인식 -> useQuery // 캐싱관리는 알아서 하는것
+            cacheTime: Infinity, // 0
+            refetchOnMount: false,
+            refetchOnReconnect: false,
+            refetchOnWindowFocus: false,
+          },
+        },
+      })
     return client
   }
 })()
@@ -30,19 +31,19 @@ export const restFetcher = async ({
   body,
   params,
 }: {
-  method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
-  path: string;
-  body?: AnyOBJ;
-  params?: AnyOBJ;
-})=> {
+  method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH'
+  path: string
+  body?: AnyOBJ
+  params?: AnyOBJ
+}) => {
   try {
     let url = `${BASE_URL}${path}`
     const fetchOptions: RequestInit = {
       method,
       headers: {
         'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': BASE_URL
-      }
+        'Access-Control-Allow-Origin': BASE_URL,
+      },
     }
 
     if (params) {
@@ -58,9 +59,10 @@ export const restFetcher = async ({
   }
 }
 
-export const graphqlFetcher = (query: RequestDocument, variables = {})=> request(BASE_URL, query, variables)
+export const graphqlFetcher = (query: RequestDocument, variables = {}) =>
+  request(BASE_URL, query, variables)
 
 export const QueryKeys = {
   PRODUCTS: 'PRODUCTS',
-  CART: 'CART'
+  CART: 'CART',
 }

@@ -1,0 +1,4 @@
+{
+  "root": true,
+  "extends": ["@purejjr/eslint-config", "prettier"]
+}

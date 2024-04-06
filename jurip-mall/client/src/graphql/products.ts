@@ -1,13 +1,13 @@
-import { gql } from 'graphql-tag';
+import { gql } from 'graphql-tag'
 
 export type product = {
-  id: string;
-  imageUrl: string;
-  price: number;
-  title: string;
-  description: string;
-  createdAt: string;
-} 
+  id: string
+  imageUrl: string
+  price: number
+  title: string
+  description: string
+  createdAt: string
+}
 
 export type products = {
   products: product[]

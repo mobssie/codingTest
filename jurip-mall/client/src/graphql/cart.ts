@@ -18,10 +18,9 @@ export const ADD_CART = gql`
   }
 `
 
-
 export const UPDATE_CART = gql`
   mutation UPDATE_CART($id: id, $amount: amount) {
-    cart(id: $id, amount: $amount){
+    cart(id: $id, amount: $amount) {
       id
       imageUrl
       price
@@ -30,7 +29,6 @@ export const UPDATE_CART = gql`
     }
   }
 `
-
 
 export const DELETE_CART = gql`
   mutation DELETE_CART($id: string) {

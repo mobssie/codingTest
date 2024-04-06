@@ -1,17 +1,6 @@
-import { product } from "../../../graphql/products"
+import { product } from '../../../graphql/products'
 
-
-
-const ProductDetail = ({
-  item: {
-    title,
-    imageUrl,
-    description,
-    price,
-  }
-}: {item: product}) => {
-  
-
+const ProductDetail = ({ item: { title, imageUrl, description, price } }: { item: product }) => {
   return (
     <li className="product-detail">
       <p className="product-detail__tit">{title}</p>

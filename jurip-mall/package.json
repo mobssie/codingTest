@@ -11,5 +11,8 @@
   "scripts": {
     "client": "yarn workspaces client dev",
     "server": ""
+  },
+  "devDependencies": {
+    "@purejjr/eslint-config": "^1.0.2"
   }
 }
